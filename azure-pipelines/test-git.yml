@@ -1,0 +1,66 @@
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
+
+trigger: none # disable triggers based on commits.
+pr: none # disable as a PR gate.
+name: 'PowerShellDocsUpdate Check'
+schedules:
+  - cron: "0 3 * * THU"  # every Thursday at 3AM UTC (off hours for Redmond, Nairobi and Montréal)
+    displayName: 'PowerShellDocsUpdate Check'
+    branches:
+      include:
+      - main
+    always: true
+
+parameters:
+- name: PipelineTimeout
+  displayName: PipelineTimeout
+  type: number
+  default: 1200
+
+resources:
+ repositories:     
+   - repository: pasionenfuego
+     type: github
+     endpoint: timayabi2020
+     name: timayabi2020/passionenfuego
+     ref: main
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: PowerShellDocsUpdate
+  pool: 
+    name: Dev
+  timeoutInMinutes: ${{ parameters.PipelineTimeout }}
+  steps:
+  - template: ./common-templates/update-sdkversion.yml
+    parameters:
+      projectFileName: $(projectFileName)
+      testType: 'Execution'
+
+  - task: PowerShell@2
+    displayName: 'Update Powershell Help'
+    continueOnError: false
+    inputs:
+      targetType: 'filePath'
+      pwsh: true
+      filePath: tools\Test.ps1
+
+  - task: PowerShell@2
+    displayName: Pushing to github
+    env:
+      GITHUB_TOKEN: ${env:GITHUB_TOKEN}
+    inputs:
+      targetType: inline
+      script: |
+        git config --global user.email "timwamalwa@gmail.com"
+        git config --global user.name "Timothy Wamalwa"
+        cd microsoftgraph-docs-powershell
+        $date = Get-Date -Format "dd-MM-yyyy"
+        $proposedBranch = "WeeklyExamplesUpdate/"+$date
+        git add .
+        git commit -m "Updating help files "+$date
+        git push --set-upstream "https://${env:GITHUB_TOKEN}@github.com/timayabi2020/passionenfuego.git" $proposedBranch
+        git status
+         
