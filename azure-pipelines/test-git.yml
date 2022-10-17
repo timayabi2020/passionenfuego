@@ -55,13 +55,12 @@ jobs:
       targetType: inline
       pwsh: true
       script: |
-        ${env:GITHUB_TOKEN}
         git config --global user.email "timwamalwa@gmail.com"
         git config --global user.name "Timothy Wamalwa"
         $date = Get-Date -Format "dd-MM-yyyy"
         $proposedBranch = "WeeklyExamplesUpdate/$date"
         git add .
         git commit -m "Updating help files "+$date
-        git push --set-upstream "https://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@github.com/timayabi2020/passionenfuego.git" $proposedBranch
+        git push --set-upstream "https://${env:GITHUB_TOKEN}@github.com/timayabi2020/passionenfuego.git" $proposedBranch
         git status
          
