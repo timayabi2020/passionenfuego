@@ -5,7 +5,6 @@ steps:
     targetType: 'inline'
     pwsh: true
     script: |
-          $sdk = Get-InstalledModule Microsoft.Graph
-          echo "Current version "+$sdk.Version
+          echo "Testing stuff "
 
 - template: ./checkout.yml
