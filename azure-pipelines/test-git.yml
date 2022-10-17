@@ -62,6 +62,6 @@ jobs:
         $proposedBranch = "WeeklyExamplesUpdate/$date"
         git add .
         git commit -m "Updating help files "+$date
-        git push --set-upstream "https://${env:GITHUB_TOKEN}@github.com/timayabi2020/passionenfuego.git" $proposedBranch
+        git push --set-upstream "https://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@github.com/timayabi2020/passionenfuego.git" $proposedBranch
         git status
          
