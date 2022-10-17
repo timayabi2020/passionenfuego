@@ -56,7 +56,6 @@ jobs:
       script: |
         git config --global user.email "timwamalwa@gmail.com"
         git config --global user.name "Timothy Wamalwa"
-        cd microsoftgraph-docs-powershell
         $date = Get-Date -Format "dd-MM-yyyy"
         $proposedBranch = "WeeklyExamplesUpdate/"+$date
         git add .
