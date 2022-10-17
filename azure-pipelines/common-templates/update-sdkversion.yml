@@ -1,5 +1,11 @@
 steps:
 - task: PowerShell@2
   displayName: Install Required Modules
+  inputs:
+    targetType: 'inline'
+    pwsh: true
+    script: |
+          $sdk = Get-InstalledModule Microsoft.Graph
+          echo "Current version "+$sdk.Version
 
 - template: ./checkout.yml
