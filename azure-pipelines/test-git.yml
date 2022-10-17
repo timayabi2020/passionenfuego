@@ -57,7 +57,7 @@ jobs:
         git config --global user.email "timwamalwa@gmail.com"
         git config --global user.name "Timothy Wamalwa"
         $date = Get-Date -Format "dd-MM-yyyy"
-        $proposedBranch = "WeeklyExamplesUpdate/"+$date
+        $proposedBranch = "WeeklyExamplesUpdate/$date"
         git add .
         git commit -m "Updating help files "+$date
         git push --set-upstream "https://${env:GITHUB_TOKEN}@github.com/timayabi2020/passionenfuego.git" $proposedBranch

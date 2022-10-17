@@ -1,5 +1,5 @@
 $Date = Get-Date -Format "dd-MM-yyyy"
-$ProposedBranch = "WeeklyExamplesUpdate/"+$Date
+$ProposedBranch = "WeeklyExamplesUpdate/$Date"
 $Exists = git branch -l $ProposedBranch
 if ([string]::IsNullOrEmpty($Exists)) {
     git checkout -b $ProposedBranch
